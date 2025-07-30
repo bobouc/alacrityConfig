@@ -1,0 +1,62 @@
+[window]
+dimensions = { columns = 120, lines = 30 }
+padding = { x = 10, y = 10 }
+decorations = "full"
+opacity = 0.96
+startup_mode = "Windowed"
+
+#[terminal.shell] # 注意：在新版 Alacritty 中是 [shell]，如果你是旧版可能需要用 [terminal]
+#program = " /bin/zsh" # 你的shell位置
+#args = [
+    #"-l",
+    #"-c",
+    #"tmux new-session -A -D -s main"
+#]
+
+[font]
+normal = { family = "MesloLGS NF", style = "Regular" }
+bold = { family = "MesloLGS NF", style = "Regular" }
+italic = { family = "MesloLGS NF", style = "Regular" }
+bold_italic = { family = "MesloLGS NF", style = "Regular" }
+size = 15.0
+
+[selection]
+save_to_clipboard = true
+
+
+[colors.primary]
+background = "#282a36"
+foreground = "#eff0eb"
+
+[colors.cursor]
+text = "#282a36"
+cursor = "#97979b"
+
+[colors.normal]
+black = "#282a36"
+red = "#ff5c57"
+green = "#5af78e"
+yellow = "#f3f99d"
+blue = "#57c7ff"
+magenta = "#ff6ac1"
+cyan = "#9aedfe"
+white = "#f1f1f0"
+
+[colors.bright]
+black = "#686868"
+red = "#ff5c57"
+green = "#5af78e"
+yellow = "#f3f99d"
+blue = "#57c7ff"
+magenta = "#ff6ac1"
+cyan = "#9aedfe"
+white = "#eff0eb"
+
+[keyboard]
+bindings = [
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "Plus", mods = "Control", action = "IncreaseFontSize" },
+  { key = "Minus", mods = "Control", action = "DecreaseFontSize" },
+  { key = "Key0", mods = "Control", action = "ResetFontSize" },
+]
