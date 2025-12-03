@@ -1,8 +1,9 @@
 [window]
 dimensions = { columns = 120, lines = 30 }
 padding = { x = 10, y = 10 }
-decorations = "full"
+decorations = "full"  
 opacity = 0.96
+blur = true
 startup_mode = "Windowed"
 
 #[terminal.shell] # 注意：在新版 Alacritty 中是 [shell]，如果你是旧版可能需要用 [terminal]
