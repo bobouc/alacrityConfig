@@ -23,8 +23,14 @@ bind -n WheelDownPane select-pane -t= \; send-keys -M
 # 使用 vi 风格的复制模式
 set-window-option -g mode-keys vi
 
-# 关键修改：鼠标选中文本后仅复制，不退出复制模式
-bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection
+# 关键修改：鼠标选中文本后复制到系统剪贴板，并自动退出复制模式
+if-shell "uname | grep -q Darwin" \
+    "bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'pbcopy'" \
+    "bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'xclip -i -selection clipboard'"
+
+# 滚动到底部时自动退出复制模式（使用逐行滚动以触发退出检测）
+bind-key -T copy-mode-vi WheelDownPane send-keys -X scroll-down
+bind-key -T copy-mode-vi WheelUpPane   send-keys -X scroll-up
 
 # 设置按 Enter 键复制选区并退出复制模式
 bind-key -T copy-mode-vi Enter send-keys -X copy-selection-and-cancel
