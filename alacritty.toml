@@ -61,3 +61,5 @@ bindings = [
   { key = "Minus", mods = "Control", action = "DecreaseFontSize" },
   { key = "Key0", mods = "Control", action = "ResetFontSize" },
 ]
+[env]
+TERM = "xterm-256color"
