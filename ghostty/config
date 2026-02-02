@@ -35,7 +35,9 @@ mouse-hide-while-typing = true
 # shell-program = /bin/zsh
 
 # Cursor configuration
-cursor-style = block
+cursor-style = bar
+cursor-style-blink = true
+adjust-cursor-thickness = 5
 cursor-invert-fg-bg = false
 
 # Copy/Paste shortcuts (default Ghostty behavior)
