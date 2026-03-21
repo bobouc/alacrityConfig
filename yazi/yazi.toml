@@ -1,0 +1,40 @@
+[mgr]
+# Show hidden files by default (dotfiles)
+show_hidden = true
+ratio = [1, 2, 8]
+
+# Sort by modification time (newest files on top)
+sort_by      = "mtime"
+sort_reverse = true
+
+# Display file size on the right side of the list
+linemode = "size"
+
+[preview]
+# Limit preview size to prevent lag on huge files
+max_width  = 1000
+max_height = 1000
+
+[opener]
+# Define your preferred editor (uses $EDITOR environment variable, falls back to nvim)
+edit = [
+    { run = '${EDITOR:-vim} "$@"', block = true, desc = "Edit file" },
+]
+
+[open]
+prepend_rules = [
+    { mime = "text/*", use = "edit" },
+    { name = "*.md",    use = "edit" },
+]
+
+
+[plugin]
+
+prepend_previewers = [
+    { url = "*.csv", run = "rich-preview"}, # for csv files
+    { url = "*.md", run = "rich-preview" }, # for markdown (.md) files
+    { url = "*.rst", run = "rich-preview"}, # for restructured text (.rst) files
+    { url = "*.ipynb", run = "rich-preview"}, # for jupyter notebooks (.ipynb)
+    { url = "*.json", run = "rich-preview"}, # for json (.json) files
+#    { url = "*.lang_type", run = "rich-preview"} # for particular language files eg. .py, .go., .lua, etc.
+]
