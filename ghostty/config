@@ -1,15 +1,31 @@
 # Ghostty Terminal Configuration
 # Converted from Alacritty configuration - Dracula theme
 # This file should be placed at: ~/.config/ghostty/config
+#-----------#
+
 
 # Window configuration
-window-width = 120
-window-height = 30
+window-width = 80
+window-height = 45
 window-padding-x = 10
 window-padding-y = 10
-window-decoration = true
+window-padding-balance = true
+window-padding-color = background
+#window-decoration = auto    # macOS 原生标题栏（推荐），也可改为 auto
 window-theme = auto
 
+# 状态自动记忆（最主流功能，强烈推荐）
+#window-save-state = default    # 自动记住上次大小、位置、最大化状态
+
+# 美化：轻微透明 + 背景模糊
+background-opacity = 0.888
+#background-blur = true          # 模糊强度，20 是主流值（可调 10~40）
+
+# scroll-line
+scrollback-limit = 50000000
+
+
+#------------------#
 # Font configuration
 font-family = MesloLGS NF
 font-size = 15
@@ -26,7 +42,6 @@ selection-foreground = #f8f8f2
 # Basic terminal behavior
 confirm-close-surface = false
 quit-after-last-window-closed = true
-scrollback-limit = 10000
 
 # Mouse configuration
 mouse-hide-while-typing = true
@@ -35,7 +50,9 @@ mouse-hide-while-typing = true
 # shell-program = /bin/zsh
 
 # Cursor configuration
-cursor-style = block
+cursor-style = bar
+cursor-style-blink = true
+adjust-cursor-thickness = 5
 cursor-invert-fg-bg = false
 
 # Copy/Paste shortcuts (default Ghostty behavior)
@@ -59,4 +76,8 @@ cursor-invert-fg-bg = false
 
 # For more advanced customization, see Ghostty documentation at:
 # https://ghostty.org/docs/config
+
+
+#setting info
+shell-integration-features = ssh-terminfo,ssh-env
 
