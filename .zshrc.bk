@@ -1,7 +1,7 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+if [[ -z "$CODEX_SHELL" && "$TERM" != dumb && -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
@@ -15,8 +15,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -90,11 +88,7 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -110,6 +104,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+alias gs="git status"
+alias cls="clear"
+alias cc="claude"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -130,9 +128,94 @@ unset __conda_setup
 export PATH="/opt/homebrew/bin:$PATH"
 
 #claude 
-export ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic
-export ANTHROPIC_MODEL=glm-4.5
-export ANTHROPIC_AUTH_TOKEN="$YOURKEY"
+#export ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic
+#export ANTHROPIC_MODEL=glm-4.7
+#export ANTHROPIC_AUTH_TOKEN=3de78c54f203464084afb2be0bc7cfcb.q7WQ6GRdWfyUWkev
+
+#claude deepseek
+
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+export CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1
+export CLAUDE_CODE_NO_FLICKER=1
+#export CLAUDE_CODE_EFFORT_LEVEL=high
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Codex's built-in terminal may not render Nerd Font/Powerline glyphs.
+# Keep the normal Powerlevel10k theme elsewhere, but use ASCII-safe prompt
+# symbols inside Codex.
+if [[ -n "$CODEX_SHELL" || "$TERM" == dumb ]]; then
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time time)
+
+  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=' '
+  typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=' '
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=' '
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
+
+  typeset -g POWERLEVEL9K_DIR_VISUAL_IDENTIFIER_EXPANSION=''
+  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=''
+  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION=''
+  typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='ok'
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='ok'
+  typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='err'
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='err'
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION='err'
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_VISUAL_IDENTIFIER_EXPANSION=''
+  typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION=''
+
+  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=
+  typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=
+  typeset -g POWERLEVEL9K_TIME_BACKGROUND=
+  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=76
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=76
+  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=196
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=196
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=196
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=250
+  typeset -g POWERLEVEL9K_TIME_FOREGROUND=250
+
+  (( ! $+functions[p10k] )) || p10k reload
+fi
+
+# Added by Antigravity
+export PATH="/Users/metal/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"
+
+#yazi config
+function yz() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+export CLICOLOR_FORCE=1
+
+# Added by Antigravity IDE
+export PATH="/Users/metal/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# opencode
+export PATH=/Users/metal/.opencode/bin:$PATH
+
+# Zellij 兼容：取消 readline 对所有 Ctrl 快捷键的拦截
+# 必须在 oh-my-zsh 加载后执行
+bindkey -r '^P'   # Ctrl+P - Pane 模式
+bindkey -r '^T'   # Ctrl+T - Tab 模式
+bindkey -r '^N'   # Ctrl+N - Resize 模式
+bindkey -r '^S'   # Ctrl+S - Scroll 模式
+bindkey -r '^O'   # Ctrl+O - Session 模式
+bindkey -r '^G'   # Ctrl+G - 锁定/解锁
+bindkey -r '^R'   # Ctrl+R - 历史搜索（已废弃，改用 Ctrl+S）

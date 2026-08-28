@@ -81,3 +81,11 @@ cursor-invert-fg-bg = false
 #setting info
 shell-integration-features = ssh-terminfo,ssh-env
 
+# Zellij 兼容配置
+# 将左侧 Option 键作为 Alt 使用（Zellij 需要）
+macos-option-as-alt = left
+
+# 解除 Ghostty 对 Alt+方向键的拦截
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+
